@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Soal;
 use App\Prodi;
+use App\Fakulta;
 use Illuminate\Support\Arr;
 
 class DataController extends Controller
@@ -52,6 +53,10 @@ class DataController extends Controller
             'kode_prodi' => $request->kode_prodi,
             'program_studi' => $request->program_studi,
             'fakultas' => $request->fakultas,
+            'nama' => $request->nama,
+            'akreditasi' => $request->akreditasi,
+            'awal_berlaku' => $request->awal_berlaku,
+            'akhir_berlaku' => $request->akhir_berlaku,
             'file' => $request->file,
         ]);
     }
