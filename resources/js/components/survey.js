@@ -24,12 +24,12 @@ function Survey() {
     angkatan: null,
     keperluan_sertif: ""
   });
-  const { isOpen: isSecondModalOpen, onOpen: onSecondModalOpen, onClose: onSecondModalClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [state, setState] = useState(false);
   const toast = useToast();
 
   useEffect(() => {
-    onSecondModalOpen();
+    onOpen();
   }, [])
 
   async function handleSubmit(e) {
@@ -41,7 +41,7 @@ function Survey() {
         fields.fakultas === "" || fields.prodi === "" ||
         fields.ipk === null || fields.lama_studi === null ||
         fields.keperluan_sertif === "" || fields.ipk > 4 ||
-        fields.lama_studi > 20
+        fields.lama_studi > 20 || fields.pekerjaan === ""
       ) {
         wait(1000).then(() => {
           setState(false);
@@ -62,7 +62,7 @@ function Survey() {
             lama_studi: fields.lama_studi, angkatan: fields.angkatan, keperluan_sertif: fields.keperluan_sertif
           }
         ).then(() => {
-          onSecondModalClose()
+          onClose()
           toast({
             title: "Data Berhasil Di-Input",
             description: "Silahkan Unduh File Anda",
@@ -99,7 +99,7 @@ function Survey() {
             lama_studi: fields.lama_studi, angkatan: fields.angkatan, keperluan_sertif: fields.keperluan_sertif
           }
         ).then(() => {
-          onSecondModalClose()
+          onClose()
           toast({
             title: "Data Berhasil Di-Input",
             description: "Silahkan Unduh File Anda",
@@ -115,7 +115,7 @@ function Survey() {
 
   return (
     <React.Fragment>
-      <Modal scrollBehavior="inside" closeOnOverlayClick={false} isOpen={isSecondModalOpen} onClose={onSecondModalClose}>
+      <Modal scrollBehavior="inside" closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent alignSelf="center">
           <ModalHeader>

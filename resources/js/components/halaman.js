@@ -11,6 +11,51 @@ import Survey from "./survey";
 
 const date = new Date();
 
+function Prodi(props) {
+  return (
+    <AccordionItem>
+      <AccordionButton>
+        <Flex flex="1" textAlign="left" color="teal">
+          {props.nama}
+        </Flex>
+        <AccordionIcon />
+      </AccordionButton>
+      <AccordionPanel pb={4} flexWrap="wrap">
+        {
+          props.dataUniv !== null && props.dataUniv.map(item => {
+            if (item.program_studi.toLowerCase() === props.nama.toLowerCase()) {
+              return (
+                <Link key={item.id} _hover={{ textDecor: "none" }} onClick={props.onOpen}>
+                  <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => props.setData(item)}>
+                    <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
+                    <Text textColor="black" my="2.5px" fontWeight="thin">
+                      {item.nama}
+                    </Text>
+                    <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
+                  </Flex>
+                </Link>
+              )
+            }
+          })
+        }
+      </AccordionPanel>
+    </AccordionItem>
+  );
+}
+
+function Fakultas(props) {
+  return (
+    <Flex flexDir="column" p="5">
+      <Text textColor="black" my="2.5px" fontWeight="semibold" mb="3">
+        {props.nama}
+      </Text>
+      <Accordion allowToggle>
+        {props.children}
+      </Accordion>
+    </Flex>
+  );
+}
+
 function Halaman() {
   const bg = useColorModeValue("green.300", "grey.100");
   const [dateTime, setDateTime] = useState({
@@ -20,7 +65,7 @@ function Halaman() {
     seconds: date.getSeconds()
   });
   const [dataUniv, setDataUniv] = useState(null);
-  const { isOpen: isFirstModalOpen, onOpen: onFirstModalOpen, onClose: onFirstModalClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -103,10 +148,11 @@ function Halaman() {
               </Flex>
               {
                 dataUniv !== null && dataUniv.map((item) => {
-                  if (item.fakultas === "option1") {
+                  if (item.fakultas === "UIN Raden Fatah") {
                     return (
-                      <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                        <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)} color="green.100" borderX="1px" borderBottom="1px">
+                      <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onOpen}>
+                        <Flex _hover={{ bg: "green.50" }} onClick={() => setData(item)}
+                          color="green.100" borderX="1px" borderBottom="1px" py="5px">
                           <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
                           <Text textColor="black" my="2.5px" fontWeight="thin">
                             {item.nama}
@@ -121,931 +167,59 @@ function Halaman() {
               <Flex h="5px" bg="green.100" borderBottomRadius="5px" />
             </TabPanel>
             <TabPanel>
-              <Flex flexDir="column" p="5">
-                <Text textColor="black" my="2.5px" fontWeight="semibold" mb="3">
-                  Fakultas Ilmu Sosial & Politik
-                </Text>
-                <Accordion allowToggle>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Ilmu Komunikasi
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "ilmu komunikasi") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Ilmu Politik
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "ilmu politik") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                </Accordion>
-              </Flex>
-              <Flex flexDir="column" p="5">
-                <Text textColor="black" my="2.5px" fontWeight="semibold" mb="3">
-                  Fakultas Sains & Teknologi
-                </Text>
-                <Accordion allowToggle>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Sistem Informasi
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "sistem informasi") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Biologi
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "biologi") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Kimia
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "kimia") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                </Accordion>
-              </Flex>
-              <Flex flexDir="column" p="5">
-                <Text textColor="black" my="2.5px" fontWeight="semibold" mb="3">
-                  Fakultas Adab & Humaniora
-                </Text>
-                <Accordion allowToggle>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Sejarah Peradaban Islam
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "sejarah peradaban islam") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Ilmu Perpustakaan
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "ilmu perpustakaan") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        D2 Ilmu Perpustakaan
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "d2 ilmu perpustakaan") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Bahasa dan Sastra Inggris
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "bahasa dan sastra inggris") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Bahasa dan Sastra Arab
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "bahasa dan sastra arab") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                </Accordion>
-              </Flex>
-              <Flex flexDir="column" p="5">
-                <Text textColor="black" my="2.5px" fontWeight="semibold" mb="3">
-                  Fakultas Ilmu Tarbiyah & Keguruan
-                </Text>
-                <Accordion allowToggle>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Keguruan & Pendidikan
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "keguruan & pendidikan") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Ilmu Agama Islam
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "ilmu agama islam") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Pendidikan Bahasa Inggris
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "pendidikan bahasa inggris") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Pendidikan Matematika
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "pendidikan matematika") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Pendidikan Biologi
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "pendidikan biologi") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Pendidikan Kimia
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "pendidikan kimia") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Pendidikan Fisika
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "pendidikan fisika") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                </Accordion>
-              </Flex>
-              <Flex flexDir="column" p="5">
-                <Text textColor="black" my="2.5px" fontWeight="semibold" mb="3">
-                  Fakultas Ushuludin & Pemikiran Islam
-                </Text>
-                <Accordion allowToggle>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Studi Agama-Agama
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "studi agama-agama") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Aqidah & Filsafat Islam
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "aqidah & filsafat islam") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Ilmu Al-Quran & Tafsir
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "ilmu al-quran & tafsir") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Ilmu Hadis
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "ilmu hadis") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Tasawuf & Psikoterapi
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "tasawuf & psikoterapi") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Magister Ilmu Al-Quran & Tafsir
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "magister ilmu al-quran & tafsir") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                </Accordion>
-              </Flex>
-              <Flex flexDir="column" p="5">
-                <Text textColor="black" my="2.5px" fontWeight="semibold" mb="3">
-                  Fakultas Ekonomi & Bisnis Islam
-                </Text>
-                <Accordion allowToggle>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Perbankan Syariah
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "perbankan syariah") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Ekonomi Syariah
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "ekonomi syariah") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Manajemen Zakat dan Wakaf
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "manajemen zakat dan wakaf") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                </Accordion>
-              </Flex>
-              <Flex flexDir="column" p="5">
-                <Text textColor="black" my="2.5px" fontWeight="semibold" mb="3">
-                  Fakultas Dakwah & Komunikasi
-                </Text>
-                <Accordion allowToggle>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Komunikasi Penyiar Islam
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "komunikasi penyiar islam") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Jurnalistik
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "jurnalistik") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Bimbingan Penyuluhan Islam
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "bimbingan penyuluhan islam") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                </Accordion>
-              </Flex>
-              <Flex flexDir="column" p="5">
-                <Text textColor="black" my="2.5px" fontWeight="semibold" mb="3">
-                  Program Pasca Sarjana
-                </Text>
-                <Accordion allowToggle>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Pendidikan Agama Islam
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "pendidikan agama islam") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Peradaban Islam
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "peradaban islam") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton>
-                      <Flex flex="1" textAlign="left" color="teal">
-                        Studi Islam
-                      </Flex>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} flexWrap="wrap">
-                      {
-                        dataUniv !== null && dataUniv.map((item) => {
-                          if (item.program_studi.toLowerCase() === "studi islam") {
-                            return (
-                              <Link key={item.id} _hover={{ textDecor: "none" }} onClick={onFirstModalOpen}>
-                                <Flex _hover={{ bg: "green.50" }} py="5px" onClick={() => setData(item)}>
-                                  <Icon ml="2%" color="teal" as={FaFileAlt} w="17px" h="auto" mr="17px" />
-                                  <Text textColor="black" my="2.5px" fontWeight="thin">
-                                    {item.nama}
-                                  </Text>
-                                  <Icon ml="auto" color="teal" as={FaExternalLinkAlt} w="17px" mr="2%" h="auto" />
-                                </Flex>
-                              </Link>
-                            )
-                          }
-                        })
-                      }
-                    </AccordionPanel>
-                  </AccordionItem>
-                </Accordion>
-              </Flex>
+              <Fakultas nama="Fakultas Ilmu Sosial & Ilmu Politik">
+                <Prodi nama="Ilmu Komunikasi" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Ilmu Politik" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+              </Fakultas>
+              <Fakultas nama="Fakultas Sains & Teknologi">
+                <Prodi nama="Sistem Informasi" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Biologi" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Kimia" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+              </Fakultas>
+              <Fakultas nama="Fakultas Adab & Humaniora">
+                <Prodi nama="Sejarah Peradaban Islam" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Ilmu Perpustakaan" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="D2 Ilmu Perpustakaan" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Bahasa dan Sastra Inggris" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Bahasa dan Sastra Arab" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+              </Fakultas>
+              <Fakultas nama="Fakultas Ilmu Tarbiyah & Keguruan">
+                <Prodi nama="Keguruan & Pendidikan" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Ilmu Agama Islam" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Pendidikan Bahasa Inggris" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Pendidikan Matematika" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Pendidikan Biologi" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Pendidikan Kimia" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Pendidikan Fisika" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+              </Fakultas>
+              <Fakultas nama="Fakultas Ushuludin & Pemikiran Islam">
+                <Prodi nama="Studi Agama-Agama" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Aqidah & Filsafat Islam" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Ilmu Al-Quran & Tafsir" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Ilmu Hadis" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Tasawuf & Psikoterapi" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Magister Ilmu Al-Quran & Tafsir" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+              </Fakultas>
+              <Fakultas nama="Fakultas Ekonomi & Bisnis Islam">
+                <Prodi nama="Perbankan Syariah" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Ekonomi Syariah" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Manajemen Zakat dan Wakaf" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+              </Fakultas>
+              <Fakultas nama="Fakultas Dakwah & Komunikasi">
+                <Prodi nama="Komunikasi Penyiar Islam" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Jurnalistik" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Bimbingan Penyuluhan Islam" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+              </Fakultas>
+              <Fakultas nama="Program Pasca Sarjana">
+                <Prodi nama="Pendidikan Agama Islam" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Peradaban Islam" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+                <Prodi nama="Studi Islam" dataUniv={dataUniv} onOpen={onOpen} setData={setData} />
+              </Fakultas>
             </TabPanel>
           </TabPanels>
         </Tabs>
       </chakra.section>
-      <Detail sendData={data} open={isFirstModalOpen} close={onFirstModalClose} />
+      <Detail sendData={data} open={isOpen} close={onClose} />
       <Survey />
     </React.Fragment>
   );
